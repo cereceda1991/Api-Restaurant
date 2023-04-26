@@ -76,7 +76,6 @@ exports.protect = catchAsync(
 exports.protectAccountOwner = catchAsync(
   async (req, res, next) => {
     const { user, sessionUser } = req;
-
     if (user.id !== sessionUser.id) {
       return next(
         new AppError(

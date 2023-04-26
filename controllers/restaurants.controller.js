@@ -1,5 +1,4 @@
 const Restaurant = require('../models/restaurant.model');
-const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createRestaurant = catchAsync(

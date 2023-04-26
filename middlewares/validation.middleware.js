@@ -24,13 +24,13 @@ exports.createUserValidation = [
   body('password')
     .notEmpty()
     .withMessage('Password cannot be empty')
-    .isLength({ min: 8 })
+    .isLength({ min: 6 })
     .withMessage(
-      'Password must be at least 8 characters long'
+      'Password must be at least 6 characters long'
     ),
   body('role')
     .notEmpty()
-    .withMessage('Role is normal Or admin'),
+    .withMessage('Role is Normal Or Admin'),
   validFields,
 ];
 exports.createRestaurantValidation = [
@@ -66,5 +66,34 @@ exports.createMealValidation = [
     .withMessage('Price cannot be empty')
     .isNumeric()
     .withMessage('The value must be a  Number '),
+  validFields,
+];
+
+exports.loginValidation = [
+  body('email')
+    .notEmpty()
+    .withMessage('Email cannot be empty')
+    .isEmail()
+    .withMessage('Please enter a valid email'),
+  body('password')
+    .notEmpty()
+    .withMessage('Password cannot be empty')
+    .isLength({ min: 6 })
+    .withMessage(
+      'Password must be at least 6 characters long'
+    ),
+  validFields,
+];
+
+exports.updateUserValidation = [
+  body('name')
+    .notEmpty()
+    .withMessage('Name cannot be empty'),
+  body('email')
+    .notEmpty()
+    .withMessage('Email cannot be empty')
+    .isEmail()
+    .withMessage('Please enter a valid email'),
+
   validFields,
 ];

@@ -1,24 +1,12 @@
 const Meal = require('../models/meal.model');
-const Restaurant = require('../models/restaurant.model');
-const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createMeal = catchAsync(
   async (req, res, next) => {
-    const { id } = req.params;
     const { name, price } = req.body;
+    const { restaurant } = req;
 
-    const restaurant = await Restaurant.findByPk(
-      id
-    );
-
-    if (!restaurant) {
-      return next(
-        new AppError('Restaurant not found', 404)
-      );
-    }
-
-    const menuItem = await Meal.create({
+    const meal = await Meal.create({
       name,
       price,
       restaurantId: restaurant.id,
@@ -26,43 +14,68 @@ exports.createMeal = catchAsync(
 
     res.status(201).json({
       status: 'success',
-      message:
-        'New menu item created successfully',
       data: {
-        menuItem,
+        meal,
       },
     });
   }
 );
 
 exports.getAllMeals = catchAsync(
-  async (req, res, next) => {
-    return res.json({
-      message: 'getMeals',
+  async (req, res) => {
+    const meals = await Meal.findAll({
+      where: {
+        status: 'active',
+      },
+      order: [['id', 'DESC']],
+    });
+
+    res.status(200).json({
+      status: 'success',
+      results: meals.length,
+      data: {
+        meals,
+      },
     });
   }
 );
 
-exports.getMealsById = catchAsync(
-  async (req, res, next) => {
-    return res.json({
-      message: 'getMealsById',
+exports.getMealById = catchAsync(
+  async (req, res) => {
+    const { meal } = req;
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        meal,
+      },
     });
   }
 );
 
 exports.updateMeal = catchAsync(
-  async (req, res, next) => {
-    return res.json({
-      message: 'updateMeal',
+  async (req, res) => {
+    const { name, price } = req.body;
+    const { meal } = req;
+
+    await meal.update({ name, price });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'The meal has been updated',
     });
   }
 );
 
 exports.deleteMeal = catchAsync(
-  async (req, res, next) => {
-    return res.json({
-      message: 'deleteMeal',
+  async (req, res) => {
+    const { meal } = req;
+
+    await meal.update({ status: 'disabled' });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Meal has been disabled',
     });
   }
 );

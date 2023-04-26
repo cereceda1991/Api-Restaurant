@@ -7,15 +7,22 @@ const userController = require('../controllers/users.controller');
 
 const userMiddleware = require('../middlewares/user.middleware');
 const authMiddleware = require('../middlewares/auth.middleware');
+const validationMiddleware = require('../middlewares/validation.middleware');
+const orderMiddleware = require('../middlewares/order.middleware');
 
 const router = express.Router();
 
 router.post(
   '/signup',
+  validationMiddleware.createUserValidation,
   userMiddleware.validEmailUniqueness,
   userController.signupUser
 );
-router.post('/login', userController.loginUser);
+router.post(
+  '/login',
+  validationMiddleware.loginValidation,
+  userController.loginUser
+);
 
 router.use(authMiddleware.protect);
 
@@ -24,6 +31,7 @@ router
   .patch(
     userMiddleware.validIfExistUser,
     authMiddleware.protectAccountOwner,
+    validationMiddleware.updateUserValidation,
     userController.updateUser
   )
   .delete(
@@ -32,13 +40,15 @@ router
     userController.deleteUser
   );
 
-router.get(
-  '/orders',
-  userController.getOrderUser
-);
-router.get(
-  '/orders/:id',
-  userController.getOrderUserById
-);
+router
+  .route('/orders')
+  .get(userController.getOrdersUser);
+
+router
+  .route('/orders/:id')
+  .get(
+    orderMiddleware.validIfExistOrder,
+    userController.getOrderUserById
+  );
 
 module.exports = router;

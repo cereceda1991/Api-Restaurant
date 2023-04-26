@@ -8,7 +8,6 @@ const reviewController = require('../controllers/reviews.controller');
 const valitationMiddleware = require('../middlewares/validation.middleware');
 const restaurantMiddleware = require('../middlewares/restaurant.middleware');
 const authMiddleware = require('../middlewares/auth.middleware');
-const userMiddleware = require('../middlewares/user.middleware');
 const reviewMiddleware = require('../middlewares/review.middleware');
 
 const router = express.Router();

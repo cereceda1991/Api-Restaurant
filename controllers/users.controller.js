@@ -4,6 +4,8 @@ const generateJWT = require('../utils/jwt');
 const AppError = require('./../utils/appError');
 const User = require('../models/user.model');
 const Order = require('../models/order.model');
+const Meal = require('../models/meal.model');
+const Restaurant = require('../models/restaurant.model');
 
 exports.signupUser = catchAsync(
   async (req, res, next) => {
@@ -94,11 +96,14 @@ exports.updateUser = catchAsync(
     const { name, email } = req.body;
     const { user } = req;
 
-    await user.update({ name, email });
+    await user.update({
+      name,
+      email: email.toLowerCase(),
+    });
 
     return res.status(200).json({
       status: 'success',
-      message: 'the user has been updated',
+      message: 'User has been updated',
     });
   }
 );
@@ -116,19 +121,28 @@ exports.deleteUser = catchAsync(
   }
 );
 
-exports.getOrderUser = catchAsync(
+exports.getOrdersUser = catchAsync(
   async (req, res, next) => {
-    const { sessionUser } = req;
+    const userId = req.sessionUser.id;
+
     const orders = await Order.findAll({
       where: {
-        userId: sessionUser.id,
+        userId: userId,
+        status: 'active',
       },
+      include: [
+        {
+          model: Meal,
+          include: [Restaurant],
+        },
+      ],
     });
-    return res.status(200).json({
+
+    res.status(200).json({
       status: 'success',
       results: orders.length,
       data: {
-        orders,
+        orders: orders,
       },
     });
   }
@@ -136,24 +150,15 @@ exports.getOrderUser = catchAsync(
 
 exports.getOrderUserById = catchAsync(
   async (req, res, next) => {
-    const { id } = req.params;
+    const { order } = req;
+    const { sessionUser } = req;
 
-    // Buscar la orden en la base de datos
-    const order = await Order.findOne({
-      where: { id },
+    await Order.findOne({
+      where: {
+        userId: sessionUser.id,
+      },
     });
 
-    // Verificar si la orden existe
-    if (!order) {
-      return next(
-        new AppError(
-          `Order with id ${id} not found.`,
-          404
-        )
-      );
-    }
-
-    // Devolver los detalles de la orden
     return res.status(200).json({
       status: 'success',
       order,
