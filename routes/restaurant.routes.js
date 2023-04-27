@@ -48,15 +48,11 @@ router.post(
 
 router
   .route('/reviews/:restaurantId/:id')
-  .patch(
+  .all(
     authMiddleware.protect,
-    reviewMiddleware.validIfExistReview,
-    reviewController.updateReview
+    reviewMiddleware.validateReviewProperty
   )
-  .delete(
-    authMiddleware.protect,
-    reviewMiddleware.validIfExistReview,
-    reviewController.deleteReview
-  );
+  .patch(reviewController.updateReview)
+  .delete(reviewController.deleteReview);
 
 module.exports = router;

@@ -11,7 +11,6 @@ exports.validIfExistOrder = catchAsync(
     const order = await Order.findOne({
       where: {
         id,
-        status: 'active',
       },
       include: [
         {
@@ -27,6 +26,21 @@ exports.validIfExistOrder = catchAsync(
           'Order with the provided ID was not found.',
           404
         )
+      );
+    }
+
+    if (order.status === 'completed') {
+      return next(
+        new AppError(
+          'Order has already been delivered',
+          404
+        )
+      );
+    }
+
+    if (order.status === 'cancelled') {
+      return next(
+        new AppError('Order is cancelled', 404)
       );
     }
 

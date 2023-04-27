@@ -1,4 +1,5 @@
 const Meal = require('../models/meal.model');
+const Restaurant = require('../models/restaurant.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -11,6 +12,7 @@ exports.validIfExistMeal = catchAsync(
         id,
         status: 'active',
       },
+      include: [{ model: Restaurant }],
     });
 
     if (!meal) {

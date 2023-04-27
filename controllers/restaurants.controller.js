@@ -1,4 +1,5 @@
 const Restaurant = require('../models/restaurant.model');
+const Review = require('../models/review.model');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createRestaurant = catchAsync(
@@ -29,6 +30,7 @@ exports.getAllRestaurant = catchAsync(
       where: {
         status: 'active',
       },
+      include: [{ model: Review }],
       order: [['id', 'DESC']],
     });
 
