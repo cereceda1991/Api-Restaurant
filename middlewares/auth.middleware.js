@@ -103,23 +103,3 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
-
-exports.updateReviewAuthorization = catchAsync(
-  async (req, res, next) => {
-    const user = req.sessionUser;
-    const review = review.req;
-
-    console.log(review);
-
-    if (review.userId !== user.id) {
-      return next(
-        new AppError(
-          'You are not authorized to update this review',
-          401
-        )
-      );
-    }
-
-    next();
-  }
-);

@@ -5,11 +5,11 @@ const Review = require('./review.model');
 const User = require('./user.model');
 
 const initModel = () => {
-  // 1 Restaurant <-----> Meals
+  // 1 Restaurant <-----> N Meals
   Restaurant.hasMany(Meal);
   Meal.belongsTo(Restaurant);
 
-  // Meal 1 - 1 Order
+  // 1 Meal  - 1 Order
   Meal.hasOne(Order);
   Order.belongsTo(Meal);
 
