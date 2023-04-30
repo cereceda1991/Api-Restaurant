@@ -15,10 +15,7 @@ router.use(authMiddleware.protect);
 
 router.post('/', orderControllers.createOrder);
 
-router.get(
-  '/me',
-  orderControllers.getAllOrderUser
-);
+router.get('/me', orderControllers.getAllOrderUser);
 
 router
   .route('/:id')

@@ -3,47 +3,43 @@ const Restaurant = require('../models/restaurant.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
-exports.validIfExistMeal = catchAsync(
-  async (req, res, next) => {
-    const { id } = req.params;
+exports.validIfExistMeal = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-    const meal = await Meal.findOne({
-      where: {
-        id,
-        status: 'active',
-      },
-      include: [{ model: Restaurant }],
-    });
+  const meal = await Meal.findOne({
+    where: {
+      id,
+      status: 'active',
+    },
+    include: [{ model: Restaurant }],
+  });
 
-    if (!meal) {
-      return next(
-        new AppError('Meal not found', 404)
-      );
-    }
-
-    req.meal = meal;
-    next();
+  if (!meal) {
+    return next(new AppError('Meal not found', 404));
   }
-);
 
-exports.validIfExistMealFromBody = catchAsync(
-  async (req, res, next) => {
-    const { mealId } = req.body;
+  req.meal = meal;
+  next();
+});
 
-    const meal = await Meal.findOne({
-      where: {
-        id: mealId,
-        status: 'active',
-      },
-    });
+// exports.validIfExistMealFromBody = catchAsync(
+//   async (req, res, next) => {
+//     const { mealId } = req.body;
 
-    if (!meal) {
-      return next(
-        new AppError('Meal not found', 404)
-      );
-    }
+//     const meal = await Meal.findOne({
+//       where: {
+//         id: mealId,
+//         status: 'active',
+//       },
+//     });
 
-    req.meal = meal;
-    next();
-  }
-);
+//     if (!meal) {
+//       return next(
+//         new AppError('Meal not found', 404)
+//       );
+//     }
+
+//     req.meal = meal;
+//     next();
+//   }
+// );
