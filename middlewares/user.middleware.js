@@ -2,65 +2,34 @@ const User = require('../models/user.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('./../utils/catchAsync');
 
-exports.validIfExistUser = catchAsync(
-  async (req, res, next) => {
-    const { id } = req.params;
+exports.validIfExistUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-    const user = await User.findOne({
-      where: {
-        id,
-        status: 'active',
-      },
-    });
+  const user = await User.findOne({
+    where: {
+      id,
+      status: 'active',
+    },
+  });
 
-    if (!user) {
-      return next(
-        new AppError('User not found', 404)
-      );
-    }
-
-    req.user = user;
-    next();
+  if (!user) {
+    return next(new AppError('User not found', 404));
   }
-);
 
-exports.validExistUserbyId = catchAsync(
-  async (req, res, next) => {
-    const { userId } = req.body;
+  req.user = user;
+  next();
+});
 
-    const user = await User.findOne({
-      where: {
-        id: userId,
-        status: 'active',
-      },
-    });
+exports.validEmailUniqueness = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
 
-    if (!user) {
-      return res.status(404).json({
-        status: 'error',
-        message: `The user ${userId} not found`,
-      });
-    }
+  const user = await User.findOne({
+    where: { email: email.toLowerCase() },
+  });
 
-    req.body.userId = userId;
-    next();
+  if (user) {
+    return next(new AppError('Email already exists', 400));
   }
-);
 
-exports.validEmailUniqueness = catchAsync(
-  async (req, res, next) => {
-    const { email } = req.body;
-
-    const user = await User.findOne({
-      where: { email: email.toLowerCase() },
-    });
-
-    if (user) {
-      return next(
-        new AppError('Email already exists', 400)
-      );
-    }
-
-    next();
-  }
-);
+  next();
+});

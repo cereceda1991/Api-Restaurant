@@ -21,25 +21,3 @@ exports.validIfExistMeal = catchAsync(async (req, res, next) => {
   req.meal = meal;
   next();
 });
-
-// exports.validIfExistMealFromBody = catchAsync(
-//   async (req, res, next) => {
-//     const { mealId } = req.body;
-
-//     const meal = await Meal.findOne({
-//       where: {
-//         id: mealId,
-//         status: 'active',
-//       },
-//     });
-
-//     if (!meal) {
-//       return next(
-//         new AppError('Meal not found', 404)
-//       );
-//     }
-
-//     req.meal = meal;
-//     next();
-//   }
-// );
