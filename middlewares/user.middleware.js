@@ -42,7 +42,7 @@ exports.checkUserExistence = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError('User not found', 404));
+    return next(new AppError('User not found', 400));
   }
   req.user = user;
   next();
