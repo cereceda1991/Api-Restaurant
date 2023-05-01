@@ -1,4 +1,5 @@
 const { body, validationResult } = require('express-validator');
+const User = require('../models/user.model');
 const validFields = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -53,7 +54,7 @@ exports.loginValidation = [
     .notEmpty()
     .withMessage('Email cannot be empty')
     .isEmail()
-    .withMessage('Please enter a valid email'),
+    .withMessage('Must be a valid email'),
   body('password')
     .notEmpty()
     .withMessage('Password cannot be empty')

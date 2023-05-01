@@ -33,3 +33,17 @@ exports.validEmailUniqueness = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.checkUserExistence = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({
+    where: { email },
+  });
+
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+  req.user = user;
+  next();
+});

@@ -21,6 +21,7 @@ router.post(
 router.post(
   '/login',
   validationMiddleware.loginValidation,
+  userMiddleware.checkUserExistence,
   userController.loginUser
 );
 
@@ -40,15 +41,10 @@ router
     userController.deleteUser
   );
 
-router
-  .route('/orders')
-  .get(userController.getOrdersUser);
+router.route('/orders').get(userController.getOrdersUser);
 
 router
   .route('/orders/:id')
-  .get(
-    orderMiddleware.validIfExistOrder,
-    userController.getOrderUserById
-  );
+  .get(orderMiddleware.validIfExistOrder, userController.getOrderUserById);
 
 module.exports = router;
