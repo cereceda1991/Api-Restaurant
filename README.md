@@ -1,14 +1,7 @@
 # Restaurant API 🍴🍝🍔
  <img src="https://img.shields.io/badge/Express.js-v4.17.1-green" alt="Express.js">  <img src="https://img.shields.io/badge/PostgreSQL-v13.3-blue" alt="PostgreSQL"> 
-<img src="https://img.shields.io/badge/Sequelize-v6.6.5-yellow" alt="Sequelize"> 
- <img src="https://img.shields.io/badge/JSON%20Web%20Tokens-v8.5.1-orange" alt="JSON Web Tokens"> 
-<img src="https://img.shields.io/badge/bcrypt-v5.0.1-red" alt="bcrypt"> 
-<img src="https://img.shields.io/badge/CORS-v2.8.5-blueviolet" alt="CORS"> 
-<img src="https://img.shields.io/badge/Helmet-v4.6.0-blue" alt="Helmet"> 
- <img src="https://img.shields.io/badge/HPP-v0.2.3-lightgrey" alt="HPP"> 
-<img src="https://img.shields.io/badge/Express%20Validator-v6.12.0-green" alt="Express Validator">  
-<img src="https://img.shields.io/badge/Dotenv-v10.0.0-yellowgreen" alt="Dotenv"> 
-<img src="https://img.shields.io/badge/Morgan-v1.10.0-blue" alt="Morgan">  <img src="https://img.shields.io/badge/Nodemon-v2.0.12-red" alt="Nodemon"><img src="https://img.shields.io/badge/Postman-v9.0.5-orange" alt="Postman"> 
+<img src="https://img.shields.io/badge/Sequelize-v6.6.5-yellow" alt="Sequelize"> <img src="https://img.shields.io/badge/JSON%20Web%20Tokens-v8.5.1-orange" alt="JSON Web Tokens"> 
+<img src="https://img.shields.io/badge/bcrypt-v5.0.1-red" alt="bcrypt"> <img src="https://img.shields.io/badge/CORS-v2.8.5-blueviolet" alt="CORS"> <img src="https://img.shields.io/badge/Helmet-v4.6.0-blue" alt="Helmet">  <img src="https://img.shields.io/badge/HPP-v0.2.3-lightgrey" alt="HPP"> <img src="https://img.shields.io/badge/Express%20Validator-v6.12.0-green" alt="Express Validator">  <img src="https://img.shields.io/badge/Dotenv-v10.0.0-yellowgreen" alt="Dotenv"> <img src="https://img.shields.io/badge/Morgan-v1.10.0-blue" alt="Morgan">  <img src="https://img.shields.io/badge/Nodemon-v2.0.12-red" alt="Nodemon"><img src="https://img.shields.io/badge/Postman-v9.0.5-orange" alt="Postman"> 
 
 
 This is a RESTful API built with Node.js, Express.js, and Sequelize for managing meals and orders of a restaurant.
